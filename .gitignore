@@ -50,3 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# SDL2 files
+SDL2/*
+SDL2.dll
+
+# Vs code Files
+.vscode/*
+*.code-workspace
+
