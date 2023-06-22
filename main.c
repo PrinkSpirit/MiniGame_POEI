@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     /**
      *        Updating Actors
      ************************************/
-    pActor->h_a = (input->right - input->left)*SPEED;
+    /*pActor->h_a = (input->right - input->left)*SPEED;
     pActor->v_a += GRAVITY;
 
     if (input->jump && player->canJump)
@@ -56,8 +56,8 @@ int main(int argc, char* argv[])
       pActor->v_a = JUMP;
     }
 
-    pActor->element->pos_x += pActor->h_a / 60;
-    pActor->element->pos_y += pActor->v_a / 60;
+    pActor->element->pos_x += pActor->h_a / MV_ATTENUATION;
+    pActor->element->pos_y += pActor->v_a / MV_ATTENUATION;
 
     if (pActor->element->pos_x <= 0)
       pActor->element->pos_x = 0;
@@ -73,8 +73,12 @@ int main(int argc, char* argv[])
       if (!input->jump)
         player->canJump = true;
     }
+
+
     pActor->element->sprite->x = (int) pActor->element->pos_x;
-    pActor->element->sprite->y = (int) pActor->element->pos_y;
+    pActor->element->sprite->y = (int) pActor->element->pos_y;*/
+
+    PlayerUpdate(player, input);
 
   /** 
    *           RENDERING

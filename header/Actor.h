@@ -23,7 +23,7 @@ typedef struct Actor{
     bool needsUpdate;
 
     //OnOverlap(struct Actor*)
-    void (*update)(struct Actor*)
+    void (*update)(struct Actor*);
 } Actor;
 
 Actor* newActor();

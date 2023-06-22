@@ -31,10 +31,13 @@ void ActorUpdate(Actor* this){
     if(this->element->pos_y <=0)
         this->element->pos_y = 0;
     
-    if(this->element->pos_x >= WIDTH)
+    if(this->element->pos_x >= WIDTH- this->element->sprite->w){
         this->element->pos_x = WIDTH - this->element->sprite->w;
-    if(this->element->pos_y >= HEIGHT)
+    }
+    if(this->element->pos_y >= HEIGHT- this->element->sprite->h){
+        this->v_a = 0;
         this->element->pos_y = HEIGHT - this->element->sprite->h;
+    }
 
     // Sprite position Update
     this->element->sprite->x = (int) this->element->pos_x;
