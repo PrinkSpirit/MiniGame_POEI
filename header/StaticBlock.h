@@ -17,5 +17,4 @@ typedef struct StaticBlock{
 
 }StaticBlock;
 
-StaticBlock* newStaticBlock();
 StaticBlock* newStaticBlock(bool);

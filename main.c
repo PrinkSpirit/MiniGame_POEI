@@ -4,14 +4,9 @@
 
 #include "Controller.h"
 #include "SDL_Rendering.h"
+#include "Player.h"
+#include "StaticBlock.h"
 
-#define WIDTH 640
-#define HEIGHT 480
-#define SIZE 200
-#define SPEED 600
-#define GRAVITY 60
-#define FPS 60
-#define JUMP -1200
 
 int main(int argc, char* argv[])
 {
@@ -20,14 +15,19 @@ int main(int argc, char* argv[])
 
   
   /* Main loop */
-  bool running = true, can_jump = true;
-  float x_pos = (WIDTH-SIZE)/2, y_pos = (HEIGHT-SIZE)/2, x_vel = 0, y_vel = 0;
-  SDL_Rect rect = {(int) x_pos, (int) y_pos, SIZE, SIZE};
+  bool running = true;
   SDL_Event event;
   
   Input* input = initController();
   
-  
+  Player* player = newPlayer();
+  player->placeholderSprite = malloc(sizeof(SDL_Rect));
+  player->placeholderSprite->h = SIZE;
+  player->placeholderSprite->w = SIZE;
+  PL_setPosition(player, (WIDTH-SIZE)/2, (HEIGHT-SIZE)/2);
+
+  Actor* pActor = PL_getActor(player);
+   
   while (running)
   {
     /**
@@ -40,30 +40,34 @@ int main(int argc, char* argv[])
     /**
      *        Updating Actors
      ************************************/
-    x_vel = (input->right - input->left)*SPEED;
-    y_vel += GRAVITY;
-    if (input->jump && can_jump)
+    pActor->h_a = (input->right - input->left)*SPEED;
+    pActor->v_a += GRAVITY;
+
+    if (input->jump && player->canJump)
     {
-      can_jump = false;
-      y_vel = JUMP;
+      player->canJump = false;
+      pActor->v_a = JUMP;
     }
-    x_pos += x_vel / 60;
-    y_pos += y_vel / 60;
-    if (x_pos <= 0)
-      x_pos = 0;
-    if (x_pos >= WIDTH - rect.w)
-      x_pos = WIDTH - rect.w;
-    if (y_pos <= 0)
-      y_pos = 0;
-    if (y_pos >= HEIGHT - rect.h)
+
+    pActor->element->pos_x += pActor->h_a / 60;
+    pActor->element->pos_y += pActor->v_a / 60;
+
+    if (pActor->element->pos_x <= 0)
+      pActor->element->pos_x = 0;
+    if (pActor->element->pos_x >= WIDTH - player->placeholderSprite->w)
+      pActor->element->pos_x = WIDTH - player->placeholderSprite->w;
+    if (pActor->element->pos_y <= 0)
+      pActor->element->pos_y = 0;
+
+    if (pActor->element->pos_y >= HEIGHT - player->placeholderSprite->h)
     {
-      y_vel = 0;
-      y_pos = HEIGHT - rect.h;
+      pActor->v_a = 0;
+      pActor->element->pos_y = HEIGHT - player->placeholderSprite->h;
       if (!input->jump)
-        can_jump = true;
+        player->canJump = true;
     }
-    rect.x = (int) x_pos;
-    rect.y = (int) y_pos;
+    player->placeholderSprite->x = (int) pActor->element->pos_x;
+    player->placeholderSprite->y = (int) pActor->element->pos_y;
 
   /** 
    *           RENDERING
@@ -74,7 +78,7 @@ int main(int argc, char* argv[])
 
     /* Draw the rectangle */
     SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
-    SDL_RenderFillRect(sdl->renderer, &rect);
+    SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
 
     /* Draw to window and loop */
     draw(sdl);
