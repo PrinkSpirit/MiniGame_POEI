@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameElement.h"
+#include <stdbool.h>
 
 /** StaticBlock
  * Define elements that will never move and have no interaction other than collision.
@@ -15,3 +16,6 @@ typedef struct StaticBlock{
     bool hasColision;
 
 }StaticBlock;
+
+StaticBlock* newStaticBlock();
+StaticBlock* newStaticBlock(bool);
