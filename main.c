@@ -27,6 +27,13 @@ int main(int argc, char* argv[])
   PL_setPosition(player, (WIDTH-SIZE)/2, (HEIGHT-SIZE)/2);
 
   Actor* pActor = PL_getActor(player);
+
+  setTexture(sdl,pActor->element,"./sprites/LinkSingle.bmp");
+  setSprite(sdl,pActor->element);
+
+  pActor->element->size->h = 32;
+  pActor->element->size->w = 32;
+
    
   while (running)
   {
@@ -54,20 +61,20 @@ int main(int argc, char* argv[])
 
     if (pActor->element->pos_x <= 0)
       pActor->element->pos_x = 0;
-    if (pActor->element->pos_x >= WIDTH - player->placeholderSprite->w)
-      pActor->element->pos_x = WIDTH - player->placeholderSprite->w;
+    if (pActor->element->pos_x >= WIDTH - pActor->element->sprite->w)
+      pActor->element->pos_x = WIDTH - pActor->element->sprite->w;
     if (pActor->element->pos_y <= 0)
       pActor->element->pos_y = 0;
 
-    if (pActor->element->pos_y >= HEIGHT - player->placeholderSprite->h)
+    if (pActor->element->pos_y >= HEIGHT - pActor->element->sprite->h)
     {
       pActor->v_a = 0;
-      pActor->element->pos_y = HEIGHT - player->placeholderSprite->h;
+      pActor->element->pos_y = HEIGHT - pActor->element->sprite->h;
       if (!input->jump)
         player->canJump = true;
     }
-    player->placeholderSprite->x = (int) pActor->element->pos_x;
-    player->placeholderSprite->y = (int) pActor->element->pos_y;
+    pActor->element->sprite->x = (int) pActor->element->pos_x;
+    pActor->element->sprite->y = (int) pActor->element->pos_y;
 
   /** 
    *           RENDERING
@@ -78,7 +85,9 @@ int main(int argc, char* argv[])
 
     /* Draw the rectangle */
     SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
-    SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
+    //SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
+    SDL_RenderCopy(sdl->renderer, pActor->element->spriteSheet, pActor->element->size, pActor->element->sprite);
+    SDL_RenderPresent(sdl->renderer);
 
     /* Draw to window and loop */
     draw(sdl);

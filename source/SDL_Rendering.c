@@ -54,3 +54,35 @@ void draw(SDL* sdl) {
     SDL_RenderPresent(sdl->renderer);
     SDL_Delay(1000/FPS);
 }
+
+void setTexture(SDL* sdl, GameElement* el, char* path){
+    SDL_Surface* file = SDL_LoadBMP(path);
+    
+    if(file==NULL)
+        fprintf(stderr, SDL_GetError());
+
+    el->spriteSheet = SDL_CreateTextureFromSurface(sdl->renderer, file);
+}
+
+void setSprite(SDL* sdl, GameElement* el){
+    Uint32 format;
+    int access = 0;
+    int width = 0;
+    int height = 0;
+    int errorCheck;
+
+    errorCheck = SDL_QueryTexture(el->spriteSheet, &format, &access, &width, &height);
+
+    if(errorCheck !=0)
+        fprintf(stderr, SDL_GetError());
+
+    if(el->sprite == NULL)
+        el->sprite = malloc(sizeof(SDL_Rect));
+    
+    // SIZE_MULT give bigger sprites
+    el->sprite->h = height * SIZE_MULT;
+    el->sprite->w = width * SIZE_MULT;
+    el->sprite->x = el->pos_x;
+    el->sprite->y = el->pos_y - el->sprite->h; //Inverted since pixel space start from the top
+
+}

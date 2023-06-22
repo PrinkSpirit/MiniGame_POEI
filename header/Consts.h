@@ -7,3 +7,5 @@
 #define GRAVITY 60
 #define FPS 60
 #define JUMP -1200
+
+#define SIZE_MULT 2

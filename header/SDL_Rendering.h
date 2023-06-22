@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include "Consts.h"
+#include "GameElement.h"
 
 typedef struct SDL{
     SDL_Window* window;
@@ -14,3 +15,6 @@ SDL* Init_SDL();
 void release_SDL(SDL* sdl);
 void clearScreen(SDL* sdl);
 void draw(SDL* sdl);
+
+void setTexture(SDL* sdl, GameElement* el, char* path);
+void setSprite(SDL* sdl, GameElement* el);

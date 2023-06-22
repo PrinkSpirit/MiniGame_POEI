@@ -18,8 +18,8 @@ void PL_setPosition(Player* this, float x, float y) {
     this->pawn->actor->element->pos_x = x;
     this->pawn->actor->element->pos_y = y;
 
-    this->placeholderSprite->x = (int)x;
-    this->placeholderSprite->y = (int)y;
+    this->pawn->actor->element->sprite->x = (int)x;
+    this->pawn->actor->element->sprite->y = (int)y;
 
 }
 
