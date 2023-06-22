@@ -16,15 +16,14 @@ Input* initController(){
     return input;
 }
 
-void input_handler(SDL_Event* event, Input* input){
+bool input_handler(SDL_Event* event, Input* input){
     while (SDL_PollEvent(event))
     {
         SDL_Scancode code = event->key.keysym.scancode;
         switch (event->type)
         {
             case SDL_QUIT:
-                //running = false;
-                break;
+                return false;
             case SDL_KEYDOWN:
                 if(up_key(code))
                     input->up = true;
@@ -58,7 +57,7 @@ void input_handler(SDL_Event* event, Input* input){
         }
     }
 
-
+    return true;
 }
 
 bool up_key(SDL_Scancode code){

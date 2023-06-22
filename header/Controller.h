@@ -21,8 +21,9 @@ typedef struct Input{
 /** input_handler
  *   - Handle key presses
  */
-void input_handler(SDL_Event* event, Input * input);
+bool input_handler(SDL_Event* event, Input * input);
 
+Input* initController();
 
 /** Key check functions
  *   - Use them to give espected keys for each actions
