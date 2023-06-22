@@ -27,12 +27,12 @@ int main(int argc, char* argv[])
   PL_setPosition(player, (WIDTH-SIZE)/2, (HEIGHT-SIZE)/2);
 
   Actor* pActor = PL_getActor(player);
-
-  setTexture(sdl,pActor->element,"./sprites/LinkSingle.bmp");
-  setSprite(sdl,pActor->element);
-
   pActor->element->size->h = 32;
   pActor->element->size->w = 32;
+
+  setTexture(sdl,pActor->element,"./sprites/Link.bmp");
+  setSprite(sdl,pActor->element);
+
 
    
   while (running)

@@ -80,8 +80,8 @@ void setSprite(SDL* sdl, GameElement* el){
         el->sprite = malloc(sizeof(SDL_Rect));
     
     // SIZE_MULT give bigger sprites
-    el->sprite->h = height * SIZE_MULT;
-    el->sprite->w = width * SIZE_MULT;
+    el->sprite->h = el->size->h * SIZE_MULT;
+    el->sprite->w = el->size->w * SIZE_MULT;
     el->sprite->x = el->pos_x;
     el->sprite->y = el->pos_y - el->sprite->h; //Inverted since pixel space start from the top
 
