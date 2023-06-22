@@ -1,9 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <SDL2/SDL.h>
-
-#define WIDTH 640
-#define HEIGHT 480
+#include "Consts.h"
 
 typedef struct SDL{
     SDL_Window* window;
@@ -14,3 +12,5 @@ typedef struct SDL{
 
 SDL* Init_SDL();
 void release_SDL(SDL* sdl);
+void clearScreen(SDL* sdl);
+void draw(SDL* sdl);

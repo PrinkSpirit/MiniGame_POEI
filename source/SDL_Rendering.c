@@ -1,4 +1,4 @@
-#include "SDL_Init.h"
+#include "SDL_Rendering.h"
 
 SDL *Init_SDL()
 {
@@ -42,4 +42,15 @@ void release_SDL(SDL *sdl)
 {
     SDL_DestroyRenderer(sdl->renderer);
     SDL_DestroyWindow(sdl->window);
+}
+
+void clearScreen(SDL *sdl)
+{
+    SDL_SetRenderDrawColor(sdl->renderer, 92, 148, 252, 255);
+    SDL_RenderClear(sdl->renderer);
+}
+
+void draw(SDL* sdl) {
+    SDL_RenderPresent(sdl->renderer);
+    SDL_Delay(1000/FPS);
 }

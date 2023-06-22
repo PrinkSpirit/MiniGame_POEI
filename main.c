@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include "Controller.h"
-#include "SDL_Init.h"
+#include "SDL_Rendering.h"
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -70,16 +70,15 @@ int main(int argc, char* argv[])
    ************************************/
 
     /* Clear screen */
-    SDL_SetRenderDrawColor(sdl->renderer, 92, 148, 252, 255);
-    SDL_RenderClear(sdl->renderer);
+    clearScreen(sdl);
 
     /* Draw the rectangle */
     SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
     SDL_RenderFillRect(sdl->renderer, &rect);
 
     /* Draw to window and loop */
-    SDL_RenderPresent(sdl->renderer);
-    SDL_Delay(1000/FPS);
+    draw(sdl);
+    
   }
   
   /* Release resources */
