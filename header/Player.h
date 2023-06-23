@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include "Pawn.h"
+#include "Controller.h"
 
 
 /** Player
@@ -26,3 +27,4 @@ Player* newPlayer();
 
 void PL_setPosition(Player*, float, float);
 Actor* PL_getActor(Player*);
+void PlayerUpdate(Player* this, Input* input);
