@@ -15,6 +15,9 @@ Level* newLevel(){
     return lvl;
 }
 
+
+
+/*     Add[X] an Element to the level          */
 void AddActor(Level* this, Actor* act){
     this->actorList[this->nbActor++] = act;
 }
@@ -31,7 +34,9 @@ void AddPlayer(Level* this, Player* player){
     this->player = player;
 }
 
-
+/**
+ * Create a new block at the desired coordinates
+*/
 void createBlock(SDL* sdl, Level* lvl, int x, int y, SDL_Texture* spriteSheet, bool collision){
     
     StaticBlock* block = newStaticBlock(collision);
@@ -88,12 +93,10 @@ void handleCollision(Actor* A, GameElement*B){
 }
 
 void checkForCollision(Level* lvl) {
-    
     // Player with blocks
     for(int i=0; i<lvl->nbBlock;i++){
         if(isColliding(lvl->player->pawn->actor->element, lvl->blockList[i]->element)){
             handleCollision(lvl->player->pawn->actor, lvl->blockList[i]->element);
-
         }
         
     }
@@ -114,21 +117,17 @@ void renderLevel(SDL* sdl, Level* lvl){
         SDL_RenderCopy(sdl->renderer, lvl->actorList[i]->element->spriteSheet, lvl->actorList[i]->element->size, lvl->actorList[i]->element->sprite);
     }
 
-    //SDL_RenderCopy(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite);
-
+    // Allow the mirror the sprite if the player is facing left
     if(lvl->player->pawn->actor->h_a > 0)
         lvl->player->flip = SDL_FLIP_NONE;
     if(lvl->player->pawn->actor->h_a < 0)
         lvl->player->flip = SDL_FLIP_HORIZONTAL;
-
-
     SDL_RenderCopyEx(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite, 0, NULL, lvl->player->flip);
     
     // Rendering random GameElements
     for(int i=0; i<lvl->nbElement; i++){
         SDL_RenderCopy(sdl->renderer, lvl->elementList[i]->spriteSheet, lvl->elementList[i]->size, lvl->elementList[i]->sprite);
     }
-
 
     SDL_RenderPresent(sdl->renderer);
 }

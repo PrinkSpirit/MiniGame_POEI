@@ -4,6 +4,10 @@
 #include "Consts.h"
 #include "GameElement.h"
 
+
+/**
+ * Handle most SDL features for rendering content
+*/
 typedef struct SDL{
     SDL_Window* window;
     Uint32 render_flags;

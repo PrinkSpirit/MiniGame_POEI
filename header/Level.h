@@ -6,7 +6,9 @@
 #include "StaticBlock.h"
 #include "Player.h"
 
-
+/**
+ * Contains and keep track of all the element composing a given level
+*/
 typedef struct Level{
 
     Actor** actorList;

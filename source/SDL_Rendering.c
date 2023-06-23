@@ -2,7 +2,6 @@
 
 SDL *Init_SDL()
 {
-
     SDL* sdl = malloc(sizeof(SDL));
 
     /* Initializes the timer, audio, video, joystick,
