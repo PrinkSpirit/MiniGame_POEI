@@ -28,6 +28,7 @@ void AddActor(Level* this, Actor* act);
 void AddBlock(Level* this, StaticBlock* act);
 void AddElement(Level* this, GameElement* act);
 void AddPlayer(Level* this, Player* player);
+void freelevel(Level* this);
 
 void createBlock(SDL* sdl, Level* lvl, int x, int y, SDL_Texture* spriteSheet, bool collision);
 

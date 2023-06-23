@@ -17,3 +17,4 @@ typedef struct GameElement{
 } GameElement;
 
 GameElement* newElement();
+void freeGameElement(GameElement * element);

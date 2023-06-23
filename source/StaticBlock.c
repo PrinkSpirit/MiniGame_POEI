@@ -11,3 +11,13 @@ StaticBlock* newStaticBlock(bool colision){
 
     return block;
 }
+
+void freeBlock(StaticBlock* block){
+    if(block !=NULL){
+        if(block->element !=NULL){
+            free(block->element);
+        }
+        free(block);
+    }
+    
+}

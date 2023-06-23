@@ -20,3 +20,16 @@ GameElement* newElement() {
 
     return ge;
 }
+
+void freeGameElement(GameElement* element){
+    if(element != NULL){
+        if(element->size != NULL){
+            free(element->size);
+        }
+        if(element->sprite != NULL){
+            free(element->sprite);
+        }
+        free(element);
+    }    
+
+}
