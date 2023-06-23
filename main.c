@@ -77,10 +77,6 @@ int main(int argc, char* argv[])
         PlayerUpdate(player, input);
         checkForCollision(level);
 
-        /*for(int i=0; i<blockNb; i++){
-            actorList[i]->update(actorList[i]);
-        }*/
-
 
         /** 
          *           RENDERING

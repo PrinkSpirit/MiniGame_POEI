@@ -114,7 +114,15 @@ void renderLevel(SDL* sdl, Level* lvl){
         SDL_RenderCopy(sdl->renderer, lvl->actorList[i]->element->spriteSheet, lvl->actorList[i]->element->size, lvl->actorList[i]->element->sprite);
     }
 
-    SDL_RenderCopy(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite);
+    //SDL_RenderCopy(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite);
+
+    if(lvl->player->pawn->actor->h_a > 0)
+        lvl->player->flip = SDL_FLIP_NONE;
+    if(lvl->player->pawn->actor->h_a < 0)
+        lvl->player->flip = SDL_FLIP_HORIZONTAL;
+
+
+    SDL_RenderCopyEx(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite, 0, NULL, lvl->player->flip);
     
     // Rendering random GameElements
     for(int i=0; i<lvl->nbElement; i++){

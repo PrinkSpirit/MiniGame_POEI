@@ -17,6 +17,8 @@ typedef struct Player
     bool isJumping;
 
     bool canJump;
+    
+    SDL_RendererFlip flip;
 
     SDL_Rect* placeholderSprite;
 

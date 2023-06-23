@@ -7,6 +7,8 @@ Player *newPlayer()
     
     p->pawn = newPawn();
     p->canJump = true;
+
+    p->flip = SDL_FLIP_NONE;
     
     return p;
 }
