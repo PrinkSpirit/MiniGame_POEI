@@ -18,14 +18,16 @@ int main(int argc, char* argv[])
     bool running = true;
     SDL_Event event;
     
-    Input* input = initController();
+    Input* input = initController();    
     
     Actor** actorList = malloc(sizeof(Actor));
     unsigned int nbActor = 0;
 
+    StaticBlock** blockList = malloc(sizeof(StaticBlock));
+    unsigned int nbBlock = 0;
+    
     GameElement** elementList = malloc(sizeof(GameElement));
     unsigned int nbElement = 0;
-    
     
     
     /* TMP: INIT PLAYER */
@@ -60,8 +62,9 @@ int main(int argc, char* argv[])
 
 
     /* Adding elements to the render list */
-    elementList[nbElement++] = B1->element;
-    elementList[nbElement++] = B2->element;
+    blockList[nbBlock++] = B1;
+    blockList[nbBlock++] = B2;
+    
     elementList[nbElement++] = pActor->element;
     
    
@@ -77,12 +80,12 @@ int main(int argc, char* argv[])
         /**
          *        Updating Actors
          ************************************/
+        PlayerUpdate(player, input);
 
         /*for(int i=0; i<blockNb; i++){
             actorList[i]->update(actorList[i]);
         }*/
 
-        PlayerUpdate(player, input);
 
         /** 
          *           RENDERING
@@ -94,9 +97,23 @@ int main(int argc, char* argv[])
         /* Draw the rectangle */
         SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
         //SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
+
+        // Rendering blocks
+        for(int i=0; i<nbBlock;i++){
+            SDL_RenderCopy(sdl->renderer, blockList[i]->element->spriteSheet, blockList[i]->element->size, blockList[i]->element->sprite);
+        }
+
+        // Rendering Actors
+        for(int i=0; i<nbActor;i++){
+            SDL_RenderCopy(sdl->renderer, actorList[i]->element->spriteSheet, actorList[i]->element->size, actorList[i]->element->sprite);
+        }
+
+        // Rendering random GameElements
         for(int i=0; i<nbElement; i++){
             SDL_RenderCopy(sdl->renderer, elementList[i]->spriteSheet, elementList[i]->size, elementList[i]->sprite);
         }
+
+
         //SDL_RenderCopy(sdl->renderer, pActor->element->spriteSheet, pActor->element->size, pActor->element->sprite);
         SDL_RenderPresent(sdl->renderer);
 
