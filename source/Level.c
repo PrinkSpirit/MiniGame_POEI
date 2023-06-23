@@ -16,18 +16,24 @@ Level* newLevel(){
 }
 
 void AddActor(Level* this, Actor* act){
-    this->actorList=(Actor**)realloc(this->actorList,sizeof(this->actorList)+sizeof(Actor));
-    this->actorList[this->nbActor++] = act;
+    
+    this->actorList=(Actor**)realloc(this->actorList,sizeof(Actor)*(this->nbActor+1));
+    this->actorList[this->nbActor] = act;
+    this->nbActor++;
 }
 
 void AddBlock(Level* this, StaticBlock* blk){
-    this->blockList=(StaticBlock**)realloc(this->blockList,sizeof(this->blockList)+sizeof(StaticBlock));
-    this->blockList[this->nbBlock++] = blk;
+    
+    this->blockList=(StaticBlock**)realloc(this->blockList,sizeof(StaticBlock)*(this->nbBlock+1));
+    this->blockList[this->nbBlock] = blk;
+    this->nbBlock++;
 }
 
 void AddElement(Level* this, GameElement* el){
-    this->elementList=(GameElement**)realloc(this->elementList,sizeof(this->elementList)+sizeof(GameElement));
-    this->elementList[this->nbElement++] = el;
+    
+    this->elementList=(GameElement**)realloc(this->elementList,sizeof(GameElement)*(this->nbElement+1));
+    this->elementList[this->nbElement] = el;
+    this->nbElement++;
 }
 
 void AddPlayer(Level* this, Player* player){
