@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include "Consts.h"
 #include "GameElement.h"
+#include "Level.h"
 
 typedef struct SDL{
     SDL_Window* window;
@@ -19,3 +20,4 @@ void draw(SDL* sdl);
 void setTexture(SDL* sdl, GameElement* el, char* path);
 SDL_Texture* loadTexture(SDL* sdl, char* path);
 void setSprite(SDL* sdl, GameElement* el);
+void renderLevel(SDL* sdl, Level* lvl);

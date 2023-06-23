@@ -6,7 +6,7 @@
 #include "SDL_Rendering.h"
 #include "Player.h"
 #include "StaticBlock.h"
-
+#include "Level.h"
 
 int main(int argc, char* argv[])
 {
@@ -18,17 +18,9 @@ int main(int argc, char* argv[])
     bool running = true;
     SDL_Event event;
     
-    Input* input = initController();    
-    
-    Actor** actorList = malloc(sizeof(Actor));
-    unsigned int nbActor = 0;
+    Input* input = initController();
 
-    StaticBlock** blockList = malloc(sizeof(StaticBlock));
-    unsigned int nbBlock = 0;
-    
-    GameElement** elementList = malloc(sizeof(GameElement));
-    unsigned int nbElement = 0;
-    
+    Level* level = newLevel(); 
     
     /* TMP: INIT PLAYER */
     Player* player = newPlayer();
@@ -43,6 +35,10 @@ int main(int argc, char* argv[])
 
     setTexture(sdl,pActor->element,"./sprites/Link.bmp");
     setSprite(sdl,pActor->element);
+
+    AddPlayer(level, player);
+
+
 
     /* TMP: Init Blocks */
     SDL_Texture* blockSprite = loadTexture(sdl, "./sprites/brick.bmp");
@@ -59,14 +55,10 @@ int main(int argc, char* argv[])
     B2->element->pos_y = HEIGHT;
     B2->element->spriteSheet = blockSprite;
     setSprite(sdl, B2->element);
-
-
-    /* Adding elements to the render list */
-    blockList[nbBlock++] = B1;
-    blockList[nbBlock++] = B2;
     
-    elementList[nbElement++] = pActor->element;
     
+    AddBlock(level, B1);
+    AddBlock(level, B2);
    
     while (running)
     {
@@ -99,23 +91,11 @@ int main(int argc, char* argv[])
         //SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
 
         // Rendering blocks
-        for(int i=0; i<nbBlock;i++){
-            SDL_RenderCopy(sdl->renderer, blockList[i]->element->spriteSheet, blockList[i]->element->size, blockList[i]->element->sprite);
-        }
-
-        // Rendering Actors
-        for(int i=0; i<nbActor;i++){
-            SDL_RenderCopy(sdl->renderer, actorList[i]->element->spriteSheet, actorList[i]->element->size, actorList[i]->element->sprite);
-        }
-
-        // Rendering random GameElements
-        for(int i=0; i<nbElement; i++){
-            SDL_RenderCopy(sdl->renderer, elementList[i]->spriteSheet, elementList[i]->size, elementList[i]->sprite);
-        }
-
+        
+        renderLevel(sdl, level);
 
         //SDL_RenderCopy(sdl->renderer, pActor->element->spriteSheet, pActor->element->size, pActor->element->sprite);
-        SDL_RenderPresent(sdl->renderer);
+        
 
         /* Draw to window and loop */
         draw(sdl);
