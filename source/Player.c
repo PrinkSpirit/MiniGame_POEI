@@ -48,7 +48,8 @@ void PlayerUpdate(Player* this, Input* input){
     }
 
 
-    if(actor->element->pos_y >= HEIGHT - actor->element->sprite->h) {
+    //if(actor->element->pos_y >= HEIGHT - actor->element->sprite->h) {
+    if(actor->v_a == 0.0f) {
         if (!input->jump)
             this->canJump = true;
     }

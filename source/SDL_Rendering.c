@@ -97,21 +97,25 @@ void setSprite(SDL* sdl, GameElement* el){
 }
 
 void renderLevel(SDL* sdl, Level* lvl){
+
+    // Background color
+    SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
+
     for(int i=0; i<lvl->nbBlock;i++){
-            SDL_RenderCopy(sdl->renderer, lvl->blockList[i]->element->spriteSheet, lvl->blockList[i]->element->size, lvl->blockList[i]->element->sprite);
-        }
+        SDL_RenderCopy(sdl->renderer, lvl->blockList[i]->element->spriteSheet, lvl->blockList[i]->element->size, lvl->blockList[i]->element->sprite);
+    }
 
-        // Rendering Actors
-        for(int i=0; i<lvl->nbActor;i++){
-            SDL_RenderCopy(sdl->renderer, lvl->actorList[i]->element->spriteSheet, lvl->actorList[i]->element->size, lvl->actorList[i]->element->sprite);
-        }
+    // Rendering Actors
+    for(int i=0; i<lvl->nbActor;i++){
+        SDL_RenderCopy(sdl->renderer, lvl->actorList[i]->element->spriteSheet, lvl->actorList[i]->element->size, lvl->actorList[i]->element->sprite);
+    }
 
-        SDL_RenderCopy(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite);
-        
-        // Rendering random GameElements
-        for(int i=0; i<lvl->nbElement; i++){
-            SDL_RenderCopy(sdl->renderer, lvl->elementList[i]->spriteSheet, lvl->elementList[i]->size, lvl->elementList[i]->sprite);
-        }
+    SDL_RenderCopy(sdl->renderer, lvl->player->pawn->actor->element->spriteSheet, lvl->player->pawn->actor->element->size, lvl->player->pawn->actor->element->sprite);
+    
+    // Rendering random GameElements
+    for(int i=0; i<lvl->nbElement; i++){
+        SDL_RenderCopy(sdl->renderer, lvl->elementList[i]->spriteSheet, lvl->elementList[i]->size, lvl->elementList[i]->sprite);
+    }
 
 
     SDL_RenderPresent(sdl->renderer);
