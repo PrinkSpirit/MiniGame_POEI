@@ -8,6 +8,8 @@
 #include "StaticBlock.h"
 #include "Level.h"
 
+
+
 int main(int argc, char* argv[])
 {
     SDL* sdl = Init_SDL();
@@ -27,7 +29,7 @@ int main(int argc, char* argv[])
     player->placeholderSprite = malloc(sizeof(SDL_Rect));
     player->placeholderSprite->h = SIZE;
     player->placeholderSprite->w = SIZE;
-    PL_setPosition(player, (WIDTH-SIZE)/2, (HEIGHT-SIZE)/2);
+    PL_setPosition(player, 8*32, (HEIGHT-4*32));
 
     Actor* pActor = PL_getActor(player);
     pActor->element->size->h = 32;
@@ -45,21 +47,21 @@ int main(int argc, char* argv[])
 
     StaticBlock* B1 = newStaticBlock(true);
     B1->element->pos_x = 0;
-    B1->element->pos_y = HEIGHT;
+    B1->element->pos_y = HEIGHT-256;
     B1->element->spriteSheet = blockSprite;
     setSprite(sdl, B1->element);
 
-
-    StaticBlock* B2 = newStaticBlock(true);
-    B2->element->pos_x = 16*SIZE_MULT;
-    B2->element->pos_y = HEIGHT;
-    B2->element->spriteSheet = blockSprite;
-    setSprite(sdl, B2->element);
-    
-    
-    AddBlock(level, B1);
-    AddBlock(level, B2);
+    createBlock(sdl, level, 3, 4, blockSprite, true);
+    createBlock(sdl, level, 4, 4, blockSprite, true);
+    createBlock(sdl, level, 8, 8, blockSprite, true);
+    createBlock(sdl, level, 1, 8, blockSprite, true);
+    createBlock(sdl, level, 0, 8, blockSprite, true);
    
+
+    for(int i=0; i<WIDTH/32; i++) {
+        createBlock(sdl, level, i, 0, blockSprite, true);
+    }
+    
     while (running)
     {
         /**
@@ -73,6 +75,7 @@ int main(int argc, char* argv[])
          *        Updating Actors
          ************************************/
         PlayerUpdate(player, input);
+        checkForCollision(level);
 
         /*for(int i=0; i<blockNb; i++){
             actorList[i]->update(actorList[i]);
@@ -85,17 +88,8 @@ int main(int argc, char* argv[])
 
         /* Clear screen */
         clearScreen(sdl);
-
-        /* Draw the rectangle */
-        SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
-        //SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
-
-        // Rendering blocks
         
-        renderLevel(sdl, level);
-
-        //SDL_RenderCopy(sdl->renderer, pActor->element->spriteSheet, pActor->element->size, pActor->element->sprite);
-        
+        renderLevel(sdl, level);    
 
         /* Draw to window and loop */
         draw(sdl);
