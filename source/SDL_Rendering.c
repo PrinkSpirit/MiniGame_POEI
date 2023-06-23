@@ -64,6 +64,15 @@ void setTexture(SDL* sdl, GameElement* el, char* path){
     el->spriteSheet = SDL_CreateTextureFromSurface(sdl->renderer, file);
 }
 
+SDL_Texture* loadTexture(SDL* sdl, char* path){
+    SDL_Surface* file = SDL_LoadBMP(path);
+    
+    if(file==NULL)
+        fprintf(stderr, SDL_GetError());
+
+    return SDL_CreateTextureFromSurface(sdl->renderer, file);
+}
+
 void setSprite(SDL* sdl, GameElement* el){
     Uint32 format;
     int access = 0;
