@@ -6,97 +6,105 @@
 #include "SDL_Rendering.h"
 #include "Player.h"
 #include "StaticBlock.h"
-
+#include "Level.h"
 
 int main(int argc, char* argv[])
 {
-  SDL* sdl = Init_SDL();
+    SDL* sdl = Init_SDL();
 
 
-  
-  /* Main loop */
-  bool running = true;
-  SDL_Event event;
-  
-  Input* input = initController();
-  
-  Player* player = newPlayer();
-  player->placeholderSprite = malloc(sizeof(SDL_Rect));
-  player->placeholderSprite->h = SIZE;
-  player->placeholderSprite->w = SIZE;
-  PL_setPosition(player, (WIDTH-SIZE)/2, (HEIGHT-SIZE)/2);
+    
+    /* Main loop */
+    bool running = true;
+    SDL_Event event;
+    
+    Input* input = initController();
 
-  Actor* pActor = PL_getActor(player);
-  pActor->element->size->h = 32;
-  pActor->element->size->w = 32;
+    Level* level = newLevel(); 
+    
+    /* TMP: INIT PLAYER */
+    Player* player = newPlayer();
+    player->placeholderSprite = malloc(sizeof(SDL_Rect));
+    player->placeholderSprite->h = SIZE;
+    player->placeholderSprite->w = SIZE;
+    PL_setPosition(player, (WIDTH-SIZE)/2, (HEIGHT-SIZE)/2);
 
-  setTexture(sdl,pActor->element,"./sprites/Link.bmp");
-  setSprite(sdl,pActor->element);
+    Actor* pActor = PL_getActor(player);
+    pActor->element->size->h = 32;
+    pActor->element->size->w = 32;
+
+    setTexture(sdl,pActor->element,"./sprites/Link.bmp");
+    setSprite(sdl,pActor->element);
+
+    AddPlayer(level, player);
 
 
+
+    /* TMP: Init Blocks */
+    SDL_Texture* blockSprite = loadTexture(sdl, "./sprites/brick.bmp");
+
+    StaticBlock* B1 = newStaticBlock(true);
+    B1->element->pos_x = 0;
+    B1->element->pos_y = HEIGHT;
+    B1->element->spriteSheet = blockSprite;
+    setSprite(sdl, B1->element);
+
+
+    StaticBlock* B2 = newStaticBlock(true);
+    B2->element->pos_x = 16*SIZE_MULT;
+    B2->element->pos_y = HEIGHT;
+    B2->element->spriteSheet = blockSprite;
+    setSprite(sdl, B2->element);
+    
+    
+    AddBlock(level, B1);
+    AddBlock(level, B2);
    
-  while (running)
-  {
-    /**
-     *       Processing events 
-     ************************************/
-    running = input_handler(&event, input);
-    
-    
-    
-    /**
-     *        Updating Actors
-     ************************************/
-    pActor->h_a = (input->right - input->left)*SPEED;
-    pActor->v_a += GRAVITY;
-
-    if (input->jump && player->canJump)
+    while (running)
     {
-      player->canJump = false;
-      pActor->v_a = JUMP;
+        /**
+         *       Processing events 
+         ************************************/
+        running = input_handler(&event, input);
+        
+        
+        
+        /**
+         *        Updating Actors
+         ************************************/
+        PlayerUpdate(player, input);
+
+        /*for(int i=0; i<blockNb; i++){
+            actorList[i]->update(actorList[i]);
+        }*/
+
+
+        /** 
+         *           RENDERING
+         ************************************/
+
+        /* Clear screen */
+        clearScreen(sdl);
+
+        /* Draw the rectangle */
+        SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
+        //SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
+
+        // Rendering blocks
+        
+        renderLevel(sdl, level);
+
+        //SDL_RenderCopy(sdl->renderer, pActor->element->spriteSheet, pActor->element->size, pActor->element->sprite);
+        
+
+        /* Draw to window and loop */
+        draw(sdl);
+      
     }
-
-    pActor->element->pos_x += pActor->h_a / 60;
-    pActor->element->pos_y += pActor->v_a / 60;
-
-    if (pActor->element->pos_x <= 0)
-      pActor->element->pos_x = 0;
-    if (pActor->element->pos_x >= WIDTH - pActor->element->sprite->w)
-      pActor->element->pos_x = WIDTH - pActor->element->sprite->w;
-    if (pActor->element->pos_y <= 0)
-      pActor->element->pos_y = 0;
-
-    if (pActor->element->pos_y >= HEIGHT - pActor->element->sprite->h)
-    {
-      pActor->v_a = 0;
-      pActor->element->pos_y = HEIGHT - pActor->element->sprite->h;
-      if (!input->jump)
-        player->canJump = true;
-    }
-    pActor->element->sprite->x = (int) pActor->element->pos_x;
-    pActor->element->sprite->y = (int) pActor->element->pos_y;
-
-  /** 
-   *           RENDERING
-   ************************************/
-
-    /* Clear screen */
-    clearScreen(sdl);
-
-    /* Draw the rectangle */
-    SDL_SetRenderDrawColor(sdl->renderer, 255, 0, 0, 255);
-    //SDL_RenderFillRect(sdl->renderer, player->placeholderSprite);
-    SDL_RenderCopy(sdl->renderer, pActor->element->spriteSheet, pActor->element->size, pActor->element->sprite);
-    SDL_RenderPresent(sdl->renderer);
-
-    /* Draw to window and loop */
-    draw(sdl);
-    
-  }
   
-  /* Release resources */
-  release_SDL(sdl);
-  SDL_Quit();
+    /* Release resources */
+    release_SDL(sdl);
+    SDL_Quit();
 
-  return 0;
+    return 0;
 }

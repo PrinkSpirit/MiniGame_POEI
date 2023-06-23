@@ -8,4 +8,5 @@
 #define FPS 60
 #define JUMP -1200
 
+#define MV_ATTENUATION 60
 #define SIZE_MULT 2
