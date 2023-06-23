@@ -18,3 +18,4 @@ typedef struct StaticBlock{
 }StaticBlock;
 
 StaticBlock* newStaticBlock(bool);
+void freeBlock(StaticBlock* block);

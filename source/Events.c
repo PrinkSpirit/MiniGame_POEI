@@ -35,14 +35,14 @@ typedef struct GoalPosition GoalPosition;
 bool isStarted=false;
 
 /**
- * Start position for player 
+ * Start position for player (rewrite by startPosition) 
 */
 float start_x=5.5;
 float start_y=5.5*1.6;
 
 /**
  * Start position for actor
- * 
+ * (rewrite in StartPosition)
 */
 float actors_x=5.5;
 float actors_y=5.5*1.6;

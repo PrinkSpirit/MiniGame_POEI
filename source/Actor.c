@@ -43,3 +43,13 @@ void ActorUpdate(Actor* this){
     this->element->sprite->x = (int) this->element->pos_x;
     this->element->sprite->y = (int) this->element->pos_y;
 }
+
+void freeActor(Actor * actor){
+    if(actor != NULL){
+        if(actor->element != NULL){
+            free(actor->element);
+        }
+        free(actor);
+    }
+    
+}

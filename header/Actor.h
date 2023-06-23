@@ -28,3 +28,4 @@ typedef struct Actor{
 
 Actor* newActor();
 void ActorUpdate(Actor* this);
+void freeActor(Actor * actor);

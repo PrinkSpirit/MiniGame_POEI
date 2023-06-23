@@ -26,3 +26,4 @@ void AddActor(Level* this, Actor* act);
 void AddBlock(Level* this, StaticBlock* act);
 void AddElement(Level* this, GameElement* act);
 void AddPlayer(Level* this, Player* player);
+void freelevel(Level* this);
